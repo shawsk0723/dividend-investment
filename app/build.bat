@@ -1,1 +1,1 @@
-pyinstaller --onefile --noconsole --paths=..\kodivstock_package\kodivstock\ DivStockAnalyzerApp.py
+pyinstaller --onefile --name=UsaDivStockAnalyzer DivStockAnalyzerApp.py
