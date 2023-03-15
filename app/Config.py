@@ -40,7 +40,7 @@ EXPIRATION_DAY = 30
 APP_EXPIRE_DATE = datetime(2023,5,1)
 #APP_EXPIRE_DATE = datetime(2023,2,1)
 
-EXPIRED_MESSAGE = '데이터 유효 기간이 만료되었습니다!'
+EXPIRED_MESSAGE = '사용 기간이 만료되었습니다!'
 
 """
 App Config
