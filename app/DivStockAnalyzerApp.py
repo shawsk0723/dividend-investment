@@ -105,8 +105,9 @@ class GUI:
                 self.statusText.insert(END, '분석을 시작합니다.')
 
                 # 분석 쓰레드 실행
+                stockLister = UserSettings.StockLister()
                 self.stockAnalyzer = UsaDivStockAnalyzer(self,
-                                                UserSettings.getStockCodeList())
+                                                stockLister.getStockCodeList())
                 self.workerThread = WorkerThread(self.stockAnalyzer)
                 self.workerThread.start()
             except Exception as e:
