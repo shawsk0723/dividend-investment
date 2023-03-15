@@ -7,6 +7,7 @@ Author
 """
 
 import os
+import traceback
 from tkinter import *            # tkinter 라이브러리에 모든 함수를 사용
 from StockAnalyzer import StockAnalyzer
 
@@ -39,7 +40,6 @@ class UsaDivStockAnalyzer(StockAnalyzer):
 
         for ticker in self.tickerList:
             try:
-                self.ticker = ticker
                 self.root.__updateStatusText__('*****************')
                 self.root.__updateStatusText__(f'{ticker}')
                 self.root.__updateStatusText__(f'분석을 시작합니다.')
@@ -50,10 +50,15 @@ class UsaDivStockAnalyzer(StockAnalyzer):
                 stockBasicInfo = StockBasicInfo(ticker)
                 self.cur_div_yield  = stockBasicInfo.getDividendYield()
                 div_yields.append(self.cur_div_yield)
-                print(f'cur_div_yield = {self.cur_div_yield}')
+                LOG(f'cur_div_yield = {self.cur_div_yield}')
 
-                payout_ratios.append(stockBasicInfo.getPayoutRatio())
-                roes.append(stockBasicInfo.getRoe())
+                self.payout_ratio = stockBasicInfo.getPayoutRatio()
+                payout_ratios.append(self.payout_ratio)
+                LOG(f'payout_ratio = {self.payout_ratio}')
+
+                self.roe = stockBasicInfo.getRoe()
+                roes.append(self.roe)
+                LOG(f'roe = {self.roe}')
 
                 # collect dividend data
                 self.root.__updateStatusText__(f'배당금 데이터를 수집합니다.')
@@ -65,16 +70,18 @@ class UsaDivStockAnalyzer(StockAnalyzer):
                 self.root.__updateStatusText__(f'적정 가격을 분석합니다.')
 
                 usaDivStockPricer = UsaDivStockPricer(self.stock_div_data)
-                buy_score = usaDivStockPricer.getBuyScore(self.cur_div_yield)
-                buy_scores.append(buy_score)
-                print(f'buy_score = {buy_score}')
+                self.buy_score = usaDivStockPricer.getBuyScore(self.cur_div_yield)
+                buy_scores.append(self.buy_score)
+                LOG(f'buy_score = {self.buy_score}')
 
-                self.root.tickerAnalysisCb(self.ticker, True)
+                self.root.tickerAnalysisCb(ticker, True)
 
                 time.sleep(2)    
 
             except Exception as e:
                 LOG(str(e))
+                LOG(traceback.format_exc())
+                time.sleep(2)   
 
         self.analysisResult['Ticker'] = self.tickerList
         self.analysisResult['div yield'] = div_yields
@@ -89,10 +96,10 @@ class UsaDivStockAnalyzer(StockAnalyzer):
         self.root.progressbar.stop()
         LOG('StockAnalyzer Stop...')
 
-    def saveAnalysisChartImage(self, chartDir):
+    def saveAnalysisChartImage(self, ticker, chartDir):
         # save price div chart by image file
-        chartFilePath = os.path.join(chartDir, self.ticker)
-        saveDivAnalysisChart(self.ticker, self.stock_div_data, self.cur_div_yield, chartFilePath)
+        chartFilePath = os.path.join(chartDir, ticker)
+        saveDivAnalysisChart(ticker, self.stock_div_data, self.cur_div_yield, chartFilePath)
 
         # To-Do: save analysis result to excel file
 
