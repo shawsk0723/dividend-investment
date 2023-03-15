@@ -7,6 +7,7 @@ Author
 """
 
 import os
+import time
 import traceback
 from tkinter import *            # tkinter 라이브러리에 모든 함수를 사용
 from StockAnalyzer import StockAnalyzer
@@ -43,13 +44,13 @@ class UsaDivStockAnalyzer(StockAnalyzer):
         roes = []
         buy_scores = []
 
+        self.root.__updateStatusText__(f'분석을 시작합니다.')
+        self.root.__updateStatusText__('*'*50)
+
         totalStockNum = len(self.tickerList)
         for idx, ticker in enumerate(self.tickerList):
             try:
-                totalStockNum = str(totalStockNum).zfill(3)
-                self.root.__updateStatusText__(f'*** ({idx+1}/{totalStockNum}) ************************')
                 self.root.__updateStatusText__(f'{ticker}')
-                self.root.__updateStatusText__(f'분석을 시작합니다.')
 
                 # collect fundamental data
                 self.root.__updateStatusText__(f'펀더멘탈 데이터를 수집합니다.')
@@ -81,9 +82,11 @@ class UsaDivStockAnalyzer(StockAnalyzer):
                 buy_scores.append(self.buy_score)
                 LOG(f'buy_score = {self.buy_score}')
 
+                index = str(idx+1).zfill(3)
+                totalStockNum = str(totalStockNum).zfill(3)
                 self.root.tickerAnalysisCb(ticker, True)
-
                 time.sleep(self.delay)    
+                self.root.__updateStatusText__(f'[*****************100%*******************] {index}/{totalStockNum} 완료하였습니다.')
 
             except Exception as e:
                 LOG(str(e))
