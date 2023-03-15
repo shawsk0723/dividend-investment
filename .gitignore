@@ -11,4 +11,4 @@ app/debug.log
 app/output/
 app/build/
 app/*.spec
-app/dist/
+app/dist/debug.log
