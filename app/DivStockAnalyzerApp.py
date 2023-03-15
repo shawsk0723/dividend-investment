@@ -9,6 +9,7 @@ Author
 from tkinter import *
 from tkinter import messagebox
 import tkinter.ttk
+import queue
 import traceback
 
 import Config
@@ -19,9 +20,11 @@ from BlogOpener import openBlog
 from KorDivStockAnalyzer import KorDivStockAnalyzer
 from UsaDivStockAnalyzer import UsaDivStockAnalyzer
 from WorkerThread import WorkerThread
+from StockAnalyzerEvent import *
 from ResultDisplayWindow import ResultDisplayWindow
 import UserSettings
 import HelpMenu
+
 
 """
 App config
@@ -50,6 +53,7 @@ class GUI:
         self.stockAnalyzer = None
         self.workerThread = None
 
+        self.eventQueue = queue.Queue()
         self.tickerAnalysisEvent = False
         self.analysisFinishEvent = False
         self.analysisResult = False
@@ -149,32 +153,32 @@ class GUI:
         self.root.config(menu=self.menu)
 
     def tickerAnalysisCb(self, ticker, success):
-        self.tickerAnalysisEvent = True
-        self.analysisResult = success
-        self.ticker = ticker
+        LOG(f'tickerAnalysisCb, ticker = {ticker}, success = {success}')
+        if success:
+            stockAnalyzerEvent = StockAnalyzerEvent(STOCK_ANALYSIS_OK_EVENT, ticker)
+        else:
+            stockAnalyzerEvent = StockAnalyzerEvent(STOCK_ANALYSIS_FAIL_EVENT, ticker)
+
+        self.eventQueue.put_nowait(stockAnalyzerEvent)
 
     def analysisCompleteCb(self, success):
-        self.analysisFinishEvent = True
-        self.analysisResult = success
+        LOG('analysisCompleteCb ~')
+        stockAnalyzerEvent = StockAnalyzerEvent(ANALYZER_FINISH_EVENT, "")
+        self.eventQueue.put_nowait(stockAnalyzerEvent)
 
     def checkAnalysisResult(self):
-        if self.tickerAnalysisEvent:
-            if self.analysisResult:
-                LOG(f'{self.ticker} analysis complete !')
-
-            else:
-                LOG(f'{self.ticker} analysis fail !')
-
-            self.tickerAnalysisEvent = False
-
-        if self.analysisFinishEvent:
-            if self.analysisResult:
+        try:
+            stockAnalyzerEvent = self.eventQueue.get_nowait()
+            event = stockAnalyzerEvent.getEvent()
+            LOG(f'event from analyzer = {event}')
+            if event == STOCK_ANALYSIS_OK_EVENT:
+                ticker = stockAnalyzerEvent.getMessage()
+                LOG(f'{ticker} analysis ok !')
+            elif event == ANALYZER_FINISH_EVENT:
                 LOG('analysis complete !')
-
-            else:
-                LOG('analysis fail !')
-
-            self.analysisFinishEvent = False
+        except Exception as e:
+            #LOG(str(e))
+            pass
 
         self.analysisResultChecker = self.root.after(200, self.checkAnalysisResult)
 
