@@ -1,4 +1,6 @@
 matplotlib
 scipy
-openpyxl==3.0.9
 pykrx
+yahoo_fin
+openpyxl==3.0.9
+yfinance==0.1.90
