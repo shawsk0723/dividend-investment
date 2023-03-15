@@ -39,6 +39,7 @@ WIN_FONT_SETTING = "맑은고딕 15"
 PADY = 5
 
 DEFAULT_FONT = ("맑은고딕",9)
+SMALL_FONT = ("맑은고딕",8)
 BIG_FONT = ("맑은고딕",10)
 
 """
@@ -53,7 +54,7 @@ class GUI:
         root.option_add(WIN_FONT, WIN_FONT_SETTING)    # 폰트설정
         root.resizable(False, False)             # x, y 창 크기 변경 불가
         root.protocol("WM_DELETE_WINDOW", self.onClosing)
-
+        root.iconbitmap('./resource/warrenbuffett.ico')
         self.stockCode = ""
         self.stockAnalyzer = None
         self.workerThread = None
@@ -126,23 +127,31 @@ class GUI:
         frame1 = Frame(root)
         frame1.pack()
 
+        self.warrenLabel = Label(frame1, 
+                                  text = Config.WARREN_RULE_1, 
+                                  font = BIG_FONT,
+                                  height=2)
+        self.warrenLabel.pack(pady=0)
+    
+        self.warrenLabel = Label(frame1, 
+                                  text = Config.WARREN_RULE_2, 
+                                  font = BIG_FONT,
+                                  height=2)
+        self.warrenLabel.pack(pady=0)
+
+        self.startButton = Button(frame1,
+                                  font = BIG_FONT,
+                                  height=3)
+        self.startButton.config(text= Config.START_BUTTON_LABEL)
+        self.startButton.config(width=30)
+        self.startButton.config(command=startButtonCb)
+        self.startButton.pack(pady=PADY*2)
+
         self.messageLabel = Label(frame1, 
                                   text = f"주식 리스트 파일 : {Config.STOCK_LIST_FILE_PATH}", 
                                   font = BIG_FONT,
                                   height=1)
         self.messageLabel.pack(pady=PADY)
-
-        #self.codeEntry = Entry(frame1, width=50)           # root라는 창에 입력창 생성
-        #self.codeEntry.insert(0, UserSettings.getStockCodeList()[0])
-        #self.codeEntry.pack(pady=PADY)                               # 입력창 배치
-
-        self.startButton = Button(frame1,
-                                  font = BIG_FONT,
-                                  height=5)
-        self.startButton.config(text= Config.START_BUTTON_LABEL)               # 버튼 내용 
-        self.startButton.config(width=20)                      # 버튼 크기
-        self.startButton.config(command=startButtonCb)               # 버튼 기능 (btnpree() 함수 호출)
-        self.startButton.pack(pady=PADY*2)                                 # 버튼 배치
 
         self.progressbar=tkinter.ttk.Progressbar(frame1, maximum=100, mode="indeterminate")
         self.progressbar.pack(pady=PADY)
@@ -232,6 +241,9 @@ class GUI:
             if event == STOCK_ANALYSIS_OK_EVENT:
                 ticker = stockAnalyzerEvent.getMessage()
                 LOG(f'{ticker} analysis ok !')
+                """
+                To-Do: 100개 이미지 저장 실행 도중 런타임 에러 발생 ---> 해결 필요
+                """
                 #self.stockAnalyzer.saveAnalysisChartImage(ticker, self.chart_dir)
             elif event == ANALYZER_FINISH_EVENT:
                 LOG('analysis complete !')
