@@ -231,11 +231,11 @@ class GUI:
             if event == STOCK_ANALYSIS_OK_EVENT:
                 ticker = stockAnalyzerEvent.getMessage()
                 LOG(f'{ticker} analysis ok !')
-                self.stockAnalyzer.saveAnalysisChartImage(self.chart_dir)
+                self.stockAnalyzer.saveAnalysisChartImage(ticker, self.chart_dir)
             elif event == ANALYZER_FINISH_EVENT:
                 LOG('analysis complete !')
                 analysisResult = self.stockAnalyzer.getAnalysisResult()
-                print(analysisResult)
+                LOG(analysisResult)
                 csvFileName = os.path.basename(Config.STOCK_LIST_FILE_PATH)
                 csvFileName = csvFileName.replace('.csv', '_result.csv')
                 resultCsvFilePath = os.path.join(self.out_dir, csvFileName)
