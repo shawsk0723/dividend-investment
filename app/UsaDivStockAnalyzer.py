@@ -40,13 +40,12 @@ class UsaDivStockAnalyzer(StockAnalyzer):
         for ticker in self.tickerList:
             try:
                 self.ticker = ticker
-                self.root.statusText.insert(END, '**************\n')
-                self.root.statusText.insert(END, f'{ticker}\n')
-                self.root.statusText.insert(END, f'분석을 시작합니다.\n')
+                self.root.__updateStatusText__('*****************')
+                self.root.__updateStatusText__(f'{ticker}')
+                self.root.__updateStatusText__(f'분석을 시작합니다.')
 
                 # collect fundamental data
-                self.root.statusText.insert(END, f'펀더멘탈 데이터를 수집합니다.\n')
-                self.root.statusText.see(END)
+                self.root.__updateStatusText__(f'펀더멘탈 데이터를 수집합니다.')
 
                 stockBasicInfo = StockBasicInfo(ticker)
                 self.cur_div_yield  = stockBasicInfo.getDividendYield()
@@ -57,15 +56,13 @@ class UsaDivStockAnalyzer(StockAnalyzer):
                 roes.append(stockBasicInfo.getRoe())
 
                 # collect dividend data
-                self.root.statusText.insert(END, f'배당금 데이터를 수집합니다.\n')
-                self.root.statusText.see(END)
+                self.root.__updateStatusText__(f'배당금 데이터를 수집합니다.')
 
                 stockDivDataCollector = StockDivDataCollector()
                 self.stock_div_data = stockDivDataCollector.collect(ticker)
 
                 # estimate stock price
-                self.root.statusText.insert(END, f'적정 가격을 분석합니다.\n')
-                self.root.statusText.see(END)
+                self.root.__updateStatusText__(f'적정 가격을 분석합니다.')
 
                 usaDivStockPricer = UsaDivStockPricer(self.stock_div_data)
                 buy_score = usaDivStockPricer.getBuyScore(self.cur_div_yield)
@@ -73,20 +70,11 @@ class UsaDivStockAnalyzer(StockAnalyzer):
                 print(f'buy_score = {buy_score}')
 
                 self.root.tickerAnalysisCb(self.ticker, True)
-                # save chart image
-                #self.root.statusText.insert(END, f'차트를 저장합니다.\n')
-                #chartFilePath = os.path.join(self.outPath, 'chart')
-                #chartFilePath = os.path.join(chartFilePath, ticker + '.png')
-                #saveDivAnalysisChart(ticker, stock_div_data, cur_div_yield, chartFilePath)
+
                 time.sleep(2)    
 
             except Exception as e:
                 LOG(str(e))
-
-        div_yields = []
-        payout_ratios = []
-        roes = []
-        buy_scores = []
 
         self.analysisResult['Ticker'] = self.tickerList
         self.analysisResult['div yield'] = div_yields
@@ -101,8 +89,9 @@ class UsaDivStockAnalyzer(StockAnalyzer):
         self.root.progressbar.stop()
         LOG('StockAnalyzer Stop...')
 
-    def saveChartImage(self, chartFilePath):
+    def saveAnalysisChartImage(self, chartDir):
         # save price div chart by image file
+        chartFilePath = os.path.join(chartDir, self.ticker)
         saveDivAnalysisChart(self.ticker, self.stock_div_data, self.cur_div_yield, chartFilePath)
 
         # To-Do: save analysis result to excel file
