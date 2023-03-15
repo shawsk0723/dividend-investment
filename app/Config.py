@@ -45,13 +45,15 @@ EXPIRED_MESSAGE = '사용 기간이 만료되었습니다!'
 """
 App Config
 """
-WIN_SIZE = "800x500"
+WIN_SIZE = "800x550"
 WIN_FONT_SETTING = "맑은고딕 9"
 
-WIN_TITLE = f'워런버픽 {Version.getVersion()} {__BUILD_TYPE__} ({__APP_GRADE__})'
+WIN_TITLE = f'워런버픽(PICK) {Version.getVersion()} {__BUILD_TYPE__} ({__APP_GRADE__})'
 
 INPUT_GUIDE_LABEL = '주식 코드를 입력하세요~'
-START_BUTTON_LABEL = '분석해 주세요~'
+WARREN_RULE_1 = 'Rule No. 1 NEVER LOSE MONEY'
+WARREN_RULE_2 = 'Rule No. 2 NEVER FORGET RULE NO. 1'
+START_BUTTON_LABEL = '뽑아 줘요~ 워런버PICK!'
 DATA_DIR = os.path.join(os.getcwd(), 'data')
 OUT_DIR = os.path.join(os.getcwd(), 'output')
 
