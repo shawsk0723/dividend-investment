@@ -94,4 +94,4 @@ def saveDivAnalysisChart(ticker, dividends, current_div_yield, img_file_path_to_
     plt.ylabel('dividend yield')
     plt.legend()
     plt.savefig(img_file_path_to_save)
-    plt.show()
+    plt.close()
