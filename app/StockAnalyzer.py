@@ -21,5 +21,5 @@ class StockAnalyzer:
     def getAnalysisResult(self):
         return self.analysisResult
 
-    def saveResult(self):
+    def saveAnalysisChartImage(self):
         pass
