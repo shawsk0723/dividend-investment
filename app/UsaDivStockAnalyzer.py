@@ -25,6 +25,11 @@ class UsaDivStockAnalyzer(StockAnalyzer):
         self.tickerList = tickerList
         self.analysisResult = {}
 
+        if Config.__APP_GRADE__ == Config.FREE:
+            self.delay = 10
+        else:
+            self.delay = 2
+
     def execute(self):
         LOG('StockAnalyzer Start...')
 
@@ -38,9 +43,11 @@ class UsaDivStockAnalyzer(StockAnalyzer):
         roes = []
         buy_scores = []
 
-        for ticker in self.tickerList:
+        totalStockNum = len(self.tickerList)
+        for idx, ticker in enumerate(self.tickerList):
             try:
-                self.root.__updateStatusText__('*****************')
+                totalStockNum = str(totalStockNum).zfill(3)
+                self.root.__updateStatusText__(f'*** ({idx+1}/{totalStockNum}) ************************')
                 self.root.__updateStatusText__(f'{ticker}')
                 self.root.__updateStatusText__(f'분석을 시작합니다.')
 
@@ -76,12 +83,12 @@ class UsaDivStockAnalyzer(StockAnalyzer):
 
                 self.root.tickerAnalysisCb(ticker, True)
 
-                time.sleep(2)    
+                time.sleep(self.delay)    
 
             except Exception as e:
                 LOG(str(e))
                 LOG(traceback.format_exc())
-                time.sleep(2)   
+                time.sleep(self.delay)   
 
         self.analysisResult['Ticker'] = self.tickerList
         self.analysisResult['div yield'] = div_yields
