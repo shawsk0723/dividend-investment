@@ -46,6 +46,7 @@ class UsaDivStockAnalyzer(StockAnalyzer):
 
                 # collect fundamental data
                 self.root.statusText.insert(END, f'펀더멘탈 데이터를 수집합니다.\n')
+                self.root.statusText.see(END)
 
                 stockBasicInfo = StockBasicInfo(ticker)
                 self.cur_div_yield  = stockBasicInfo.getDividendYield()
@@ -57,11 +58,15 @@ class UsaDivStockAnalyzer(StockAnalyzer):
 
                 # collect dividend data
                 self.root.statusText.insert(END, f'배당금 데이터를 수집합니다.\n')
+                self.root.statusText.see(END)
+
                 stockDivDataCollector = StockDivDataCollector()
                 self.stock_div_data = stockDivDataCollector.collect(ticker)
 
                 # estimate stock price
                 self.root.statusText.insert(END, f'적정 가격을 분석합니다.\n')
+                self.root.statusText.see(END)
+
                 usaDivStockPricer = UsaDivStockPricer(self.stock_div_data)
                 buy_score = usaDivStockPricer.getBuyScore(self.cur_div_yield)
                 buy_scores.append(buy_score)
