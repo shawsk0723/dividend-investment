@@ -36,6 +36,9 @@ WIN_FONT = "*Font"
 WIN_FONT_SETTING = "맑은고딕 15"
 PADY = 5
 
+DEFAULT_FONT = ("맑은고딕",9)
+BIG_FONT = ("맑은고딕",10)
+
 """
 GUI Class
 """
@@ -83,17 +86,20 @@ class GUI:
             else:
                 remainedDay = expiryChecker.getRemainedDay()
                 LOG(f'remained day = {remainedDay}')
-                self.expiryLabel = Label(root, text = f'사용 기간이 {remainedDay}일 남았습니다.', height=2)
+                self.expiryLabel = Label(root,
+                                         text = f'사용 기간이 {remainedDay}일 남았습니다.',
+                                         font = DEFAULT_FONT, fg ="blue",
+                                         height=1)
                 self.expiryLabel.pack(pady=PADY)
 
         # Start Button 콜백 함수
         def startButtonCb():
             try:
                 LOG('Start Button Clicked ~')
-                self.stockCode = self.codeEntry.get()
-                if self.stockCode == "":
-                    messagebox.showerror('Error', '코드를 입력하세요!')
-                    return
+                #self.stockCode = self.codeEntry.get()
+                #if self.stockCode == "":
+                #    messagebox.showerror('Error', '코드를 입력하세요!')
+                #    return
                 # 결과 텍스트 위젯 리셋
                 self.statusText.delete(1.0,END)
                 self.statusText.insert(END, '분석을 시작합니다.')
@@ -107,30 +113,66 @@ class GUI:
                 traceback.format_exc()
                 print(e)
 
-        self.messageLabel = Label(root, text = Config.INPUT_GUIDE_LABEL, height=2)
+        """
+        제어 프레임
+        """
+        frame1 = Frame(root)
+        frame1.pack()
+
+        self.messageLabel = Label(frame1, 
+                                  text = f"주식 리스트 파일 : {Config.STOCK_LIST_FILE_PATH}", 
+                                  font = BIG_FONT,
+                                  height=1)
         self.messageLabel.pack(pady=PADY)
 
-        self.codeEntry = Entry(root, width=50)           # root라는 창에 입력창 생성
-        self.codeEntry.insert(0, UserSettings.getStockCodeList()[0])
-        self.codeEntry.pack(pady=PADY)                               # 입력창 배치
+        #self.codeEntry = Entry(frame1, width=50)           # root라는 창에 입력창 생성
+        #self.codeEntry.insert(0, UserSettings.getStockCodeList()[0])
+        #self.codeEntry.pack(pady=PADY)                               # 입력창 배치
 
-        self.startButton = Button(root)                       # root라는 창에 버튼 생성
+        self.startButton = Button(frame1,
+                                  font = BIG_FONT,
+                                  height=5)
         self.startButton.config(text= Config.START_BUTTON_LABEL)               # 버튼 내용 
         self.startButton.config(width=20)                      # 버튼 크기
         self.startButton.config(command=startButtonCb)               # 버튼 기능 (btnpree() 함수 호출)
         self.startButton.pack(pady=PADY*2)                                 # 버튼 배치
 
-        self.progressbar=tkinter.ttk.Progressbar(root, maximum=100, mode="indeterminate")
+        self.progressbar=tkinter.ttk.Progressbar(frame1, maximum=100, mode="indeterminate")
         self.progressbar.pack(pady=PADY)
 
-        self.statusLabel = Label(root, text = f'진행 상태')
+        self.statusLabel = Label(frame1, text = f'진행 상태',
+                                 font = BIG_FONT)
         self.statusLabel.pack(pady=PADY*2)
 
-        self.statusText = Text(root, height=10, width=50)
+        """
+        진행 상황 프레임
+        """
+        frame2 = Frame(root)
+        frame2.pack()
+
+        # add a vertical scrollbar
+        scrollbar = Scrollbar(frame2, orient='vertical')
+        scrollbar.pack(side=RIGHT, fill='both')
+
+        self.statusText = Text(frame2, height=10, width=70,
+                               yscrollcommand=scrollbar.set, 
+                               font = BIG_FONT)
         #self.statusText.insert(END, '')
         self.statusText.pack(pady=PADY*2)
 
-        openBlogButton = Button(root, text = "코드장인의 블로그 바로가기",command=openBlog)
+        # Attach the scrollbar with the text widget
+        scrollbar.config(command=self.statusText.yview)
+
+
+        """
+        기타 정보 프레임
+        """
+        frame3 = Frame(root)
+        frame3.pack()
+        openBlogButton = Button(frame3, 
+                                text = "코드장인의 블로그 바로가기",
+                                font = BIG_FONT,
+                                command=openBlog)
         openBlogButton.pack(side=BOTTOM, pady=20)
 
         """
