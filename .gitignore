@@ -8,3 +8,6 @@ dividend-achievers/.ipynb_checkpoints/
 dividend-achievers/output/
 *.pyc
 app/debug.log
+app/output/
+app/build/
+app/*.spec
