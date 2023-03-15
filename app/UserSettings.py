@@ -14,6 +14,9 @@ class StockLister:
         self.filePath = filePath
         self.stockCodeKey = stockCodeKey
 
+    def getStockFilePath(self):
+        return self.filePath
+
     def getFirstStockCode(self):
         try:
             df = pd.read_csv(self.filePath)
