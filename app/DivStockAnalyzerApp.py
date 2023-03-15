@@ -240,9 +240,9 @@ class GUI:
                 csvFileName = csvFileName.replace('.csv', '_result.csv')
                 resultCsvFilePath = os.path.join(self.out_dir, csvFileName)
                 AnalysisResultSaver.saveAnalsisResultToCsv(analysisResult, resultCsvFilePath)
-                self.__updateStatusText__('*'*30)
+                self.__updateStatusText__('*'*50)
                 self.__updateStatusText__('주식 리스트 분석을 모두 완료하였습니다.')
-                self.__updateStatusText__('*'*30)
+                self.__updateStatusText__('*'*50)
             else:
                 LOG('invalid event !')
         except Exception as e:
