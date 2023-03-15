@@ -5,7 +5,7 @@ from yahoo_fin import stock_info
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 import matplotlib.pyplot as plt
-import time
+import traceback
 
 def makeDirIfNotExist(dir):
     try:
@@ -39,43 +39,53 @@ class StockBasicInfo:
 
 class StockDivDataCollector:
     def __init__(self):
-        pass
-        #self.ticker = ticker
-        #self.periods = periods
+        self.stock_div_data = None
 
     def collect(self, ticker, periods=7):
-        end_date = datetime.now().strftime("%Y-%m-%d")
-        print("end date: " , end_date)
-        start_date = (datetime.now() - relativedelta(years=periods)).strftime("%Y-%m-%d")
-        print("start date: ", start_date)
+        try:
+            end_date = datetime.now().strftime("%Y-%m-%d")
+            print("end date: " , end_date)
+            start_date = (datetime.now() - relativedelta(years=periods)).strftime("%Y-%m-%d")
+            print("start date: ", start_date)
 
-        stock_div_data = stock_info.get_dividends(ticker, start_date=start_date, end_date=end_date)
-        stock_div_data.drop(['ticker'], axis=1, inplace=True)
+            stock_div_data = stock_info.get_dividends(ticker, start_date=start_date, end_date=end_date)
+            stock_div_data.drop(['ticker'], axis=1, inplace=True)
 
-        # Get stock price data
-        stock_price_data = yf.download(ticker, start_date, end_date)
-        df_close_price = stock_price_data.loc[stock_div_data.index]['Close']
-        stock_div_data['close'] = df_close_price
+            # Get stock price data
+            stock_price_data = yf.download(ticker, start_date, end_date)
+            df_close_price = stock_price_data.loc[stock_div_data.index]['Close']
+            stock_div_data['close'] = df_close_price
 
-        div_freq = round(len(stock_div_data.index)/periods)
-        div_yield = stock_div_data['dividend']*div_freq / stock_div_data['close'] * 100
-        div_yield = round(div_yield, 2)
-        stock_div_data['div yield'] = div_yield
-        self.stock_div_data = stock_div_data
-        return self.stock_div_data
+            div_freq = round(len(stock_div_data.index)/periods)
+            div_yield = stock_div_data['dividend']*div_freq / stock_div_data['close'] * 100
+            div_yield = round(div_yield, 2)
+            stock_div_data['div yield'] = div_yield
+            self.stock_div_data = stock_div_data
+            return self.stock_div_data
+        except Exception as e:
+            traceback.format_exc()
+            return pd.DataFrame()
 
 class UsaDivStockPricer:
     def __init__(self, stockDivData):
         self.stockDivData = stockDivData
 
     def getBuyScore(self, current_div_yield):
-        div_min = min(self.stockDivData['div yield'])
-        div_max = max(self.stockDivData['div yield'])
-        self.buyScore = self.__calculate_buy_score(current_div_yield, div_min, div_max)
-        return self.buyScore
+        try:
+            div_min = min(self.stockDivData['div yield'])
+            div_max = max(self.stockDivData['div yield'])
+            self.buyScore = self.__calculate_buy_score(current_div_yield, div_min, div_max)
+            return self.buyScore
+        except Exception as e:
+            traceback.format_exc()            
+            return 'N/A'
         
     def __get_percentage(self, input, min, max):
-        return round((input - min) / (max - min) * 100)
+        try:
+            return round((input - min) / (max - min) * 100)
+        except Exception as e:
+            traceback.format_exc()            
+            return 'N/A'
 
     def __calculate_buy_score(self, current_div_yield, div_min, div_max):
         buy_score = self.__get_percentage(current_div_yield, div_min, div_max)
