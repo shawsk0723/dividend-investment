@@ -45,15 +45,17 @@ EXPIRED_MESSAGE = '사용 기간이 만료되었습니다!'
 """
 App Config
 """
+APP_NAME = '안티똥손'
+
 WIN_SIZE = "800x550"
 WIN_FONT_SETTING = "맑은고딕 9"
 
-WIN_TITLE = f'워런버픽(PICK) {Version.getVersion()} {__BUILD_TYPE__} ({__APP_GRADE__})'
+WIN_TITLE = f'{APP_NAME} {COUNTRY}판 {Version.getVersion()} {__BUILD_TYPE__} ({__APP_GRADE__})'
 
-INPUT_GUIDE_LABEL = '주식 코드를 입력하세요~'
-WARREN_RULE_1 = 'Rule No. 1 NEVER LOSE MONEY'
-WARREN_RULE_2 = 'Rule No. 2 NEVER FORGET RULE NO. 1'
-START_BUTTON_LABEL = '뽑아 줘요~ 워런버PICK!'
+TITLE_LABEL = '똥손탈출 프로젝트'
+SUBTITLE_LABEL_1 = '문제점 : 우리는 똥손으로 태어났다.'
+SUBTITLE_LABEL_2 = '해결책 : 매수 버튼 누르기 전에 안티똥손 버튼을 먼저 눌러 본다.'
+START_BUTTON_LABEL = '도와줘요~ 안티똥손!'
 DATA_DIR = os.path.join(os.getcwd(), 'data')
 OUT_DIR = os.path.join(os.getcwd(), 'output')
 
