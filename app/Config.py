@@ -48,7 +48,7 @@ App Config
 WIN_SIZE = "800x500"
 WIN_FONT_SETTING = "맑은고딕 9"
 
-WIN_TITLE = f'안티똥손 {COUNTRY}판 {Version.getVersion()} {__BUILD_TYPE__} ({__APP_GRADE__})'
+WIN_TITLE = f'워런버픽 {Version.getVersion()} {__BUILD_TYPE__} ({__APP_GRADE__})'
 
 INPUT_GUIDE_LABEL = '주식 코드를 입력하세요~'
 START_BUTTON_LABEL = '분석해 주세요~'
