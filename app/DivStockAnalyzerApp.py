@@ -6,6 +6,7 @@ Author
 - https://blog.naver.com/shawgibal
 """
 
+import os
 from tkinter import *
 from tkinter import messagebox
 import tkinter.ttk
@@ -22,6 +23,7 @@ from UsaDivStockAnalyzer import UsaDivStockAnalyzer
 from WorkerThread import WorkerThread
 from StockAnalyzerEvent import *
 from ResultDisplayWindow import ResultDisplayWindow
+import AnalysisResultSaver
 import UserSettings
 import HelpMenu
 
@@ -62,7 +64,10 @@ class GUI:
         self.analysisResult = False
 
         # output 폴더가 없다면 새로 생성
-        AppUtil.makeDirIfNotExist(Config.OUT_DIR)
+        self.out_dir = Config.OUT_DIR
+        AppUtil.makeDirIfNotExist(self.out_dir)
+        self.chart_dir = os.path.join(self.out_dir, 'chart')
+        AppUtil.makeDirIfNotExist(self.chart_dir)
 
         self.analysisResultChecker = self.root.after(200, self.checkAnalysisResult)
 
@@ -212,18 +217,40 @@ class GUI:
     def checkAnalysisResult(self):
         try:
             stockAnalyzerEvent = self.eventQueue.get_nowait()
-            event = stockAnalyzerEvent.getEvent()
-            LOG(f'event from analyzer = {event}')
-            if event == STOCK_ANALYSIS_OK_EVENT:
-                ticker = stockAnalyzerEvent.getMessage()
-                LOG(f'{ticker} analysis ok !')
-            elif event == ANALYZER_FINISH_EVENT:
-                LOG('analysis complete !')
+            self.__handleEvent__(stockAnalyzerEvent)
         except Exception as e:
             #LOG(str(e))
             pass
 
         self.analysisResultChecker = self.root.after(200, self.checkAnalysisResult)
+
+    def __handleEvent__(self, stockAnalyzerEvent):
+        try:
+            event = stockAnalyzerEvent.getEvent()
+            LOG(f'event from analyzer = {event}')
+            if event == STOCK_ANALYSIS_OK_EVENT:
+                ticker = stockAnalyzerEvent.getMessage()
+                LOG(f'{ticker} analysis ok !')
+                self.stockAnalyzer.saveAnalysisChartImage(self.chart_dir)
+            elif event == ANALYZER_FINISH_EVENT:
+                LOG('analysis complete !')
+                analysisResult = self.stockAnalyzer.getAnalysisResult()
+                print(analysisResult)
+                csvFileName = os.path.basename(Config.STOCK_LIST_FILE_PATH)
+                csvFileName = csvFileName.replace('.csv', '_result.csv')
+                resultCsvFilePath = os.path.join(self.out_dir, csvFileName)
+                AnalysisResultSaver.saveAnalsisResultToCsv(analysisResult, resultCsvFilePath)
+                self.__updateStatusText__('*'*30)
+                self.__updateStatusText__('주식 리스트 분석을 모두 완료하였습니다.')
+                self.__updateStatusText__('*'*30)
+            else:
+                LOG('invalid event !')
+        except Exception as e:
+            LOG(str(e))
+
+    def __updateStatusText__(self, message):
+        self.statusText.insert(END, message + '\n')
+        self.statusText.see(END)        
 
 if __name__ == "__main__":
     root = Tk()
