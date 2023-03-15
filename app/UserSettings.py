@@ -7,10 +7,10 @@ Author
 """
 
 import pandas as pd
-
+import Config
 
 class StockLister:
-    def __init__(self, filePath, stockCodeKey):
+    def __init__(self, filePath=Config.STOCK_LIST_FILE_PATH, stockCodeKey='Ticker'):
         self.filePath = filePath
         self.stockCodeKey = stockCodeKey
 
@@ -38,7 +38,7 @@ class StockLister:
 
 def getDefaultStockCode():
     try:
-        df = pd.read_csv('./data/stocklist.csv')
+        df = pd.read_csv(Config.STOCK_LIST_FILE_PATH)
         return df.Ticker.to_list()[0]
     except Exception as e:
         print(str(e))
@@ -46,7 +46,7 @@ def getDefaultStockCode():
 
 def getStockCodeList():
     try:
-        df = pd.read_csv('./data/stocklist.csv')
+        df = pd.read_csv(Config.STOCK_LIST_FILE_PATH)
         return df.Ticker.to_list()
     except Exception as e:
         print(str(e))
@@ -54,7 +54,7 @@ def getStockCodeList():
 
 
 if __name__ == '__main__':
-    stockLister = StockLister('./data/stocklist.csv', 'Ticker')
+    stockLister = StockLister(Config.STOCK_LIST_FILE_PATH, 'Ticker')
     defaultStockCode = stockLister.getFirstStockCode()
     print(f'defaultStockCode = {defaultStockCode}')
     stockCodeList = stockLister.getStockCodeList()
