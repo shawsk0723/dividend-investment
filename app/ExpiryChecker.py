@@ -12,13 +12,14 @@ from datetime import datetime
 from datetime import timedelta
 import Config
 
-def checkExpiry():
-    expire_date = Config.APP_EXPIRE_DATE
-    return datetime.today() > expire_date
+class HardExpiryChecker:
+    def isExpired(self):
+        expire_date = Config.APP_EXPIRE_DATE
+        return datetime.today() > expire_date
 
-def getExiryDate():
-    exiryDate = (Config.APP_EXPIRE_DATE - timedelta(days=1)).strftime("%Y-%m-%d")
-    return exiryDate
+    def getExiryDate(self):
+        exiryDate = (Config.APP_EXPIRE_DATE - timedelta(days=1)).strftime("%Y-%m-%d")
+        return exiryDate
 
 class ExpiryChecker:
     def __init__(self, expiration_day = Config.EXPIRATION_DAY):
