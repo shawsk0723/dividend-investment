@@ -38,9 +38,10 @@ WIN_FONT = "*Font"
 WIN_FONT_SETTING = "맑은고딕 15"
 PADY = 5
 
-DEFAULT_FONT = ("맑은고딕",9)
 SMALL_FONT = ("맑은고딕",8)
+NORMAL_FONT = ("맑은고딕",9)
 BIG_FONT = ("맑은고딕",10)
+
 
 """
 GUI Class
@@ -95,7 +96,7 @@ class GUI:
                 LOG(f'remained day = {remainedDay}')
                 self.expiryLabel = Label(root,
                                          text = f'사용 기간이 {remainedDay}일 남았습니다.',
-                                         font = DEFAULT_FONT, fg ="blue",
+                                         font = NORMAL_FONT, fg ="red",
                                          height=1)
                 self.expiryLabel.pack(pady=PADY)
 
@@ -127,17 +128,25 @@ class GUI:
         frame1 = Frame(root)
         frame1.pack()
 
-        self.warrenLabel = Label(frame1, 
-                                  text = Config.WARREN_RULE_1, 
-                                  font = BIG_FONT,
+        self.titleLabel = Label(frame1, 
+                                  text = Config.TITLE_LABEL, 
+                                  font = BIG_FONT, fg ="blue",
+                                  borderwidth=1, relief="solid",
+                                  width=30,
                                   height=2)
-        self.warrenLabel.pack(pady=0)
+        self.titleLabel.pack(pady=0)
+
+        self.subtitleLabel1 = Label(frame1,
+                                  text = Config.SUBTITLE_LABEL_1, 
+                                  font = NORMAL_FONT,
+                                  height=2)
+        self.subtitleLabel1.pack(pady=0)
     
-        self.warrenLabel = Label(frame1, 
-                                  text = Config.WARREN_RULE_2, 
-                                  font = BIG_FONT,
+        self.subtitleLabel2 = Label(frame1, 
+                                  text = Config.SUBTITLE_LABEL_2, 
+                                  font = NORMAL_FONT,
                                   height=2)
-        self.warrenLabel.pack(pady=0)
+        self.subtitleLabel2.pack(pady=0)
 
         self.startButton = Button(frame1,
                                   font = BIG_FONT,
