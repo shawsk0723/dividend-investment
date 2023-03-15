@@ -26,14 +26,13 @@ class ExpiryChecker:
         m = blake2b(digest_size=17)
         m.update(Config.WIN_TITLE.encode('utf-8'))
         expiryfilename = m.hexdigest() + '.bin'
-        #print(f'expiryfilename length = {len(expiryfilename)}')
         self.expiry_file_path = os.path.join(tempfile.gettempdir(), expiryfilename) 
         self.expiration_day = expiration_day
         self.remained_day = 0
 
     def isExpired(self):
         current_date = datetime.now()
-        print(f'expiry_file_path = {self.expiry_file_path}')
+        #print(f'expiry_file_path = {self.expiry_file_path}')
         if os.path.isfile(self.expiry_file_path):
             with open(self.expiry_file_path, 'r') as f:
                 install_date =f.read()
