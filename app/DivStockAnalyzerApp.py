@@ -15,7 +15,7 @@ import traceback
 
 import Config
 import AppUtil
-from ExpiryChecker import ExpiryChecker
+from ExpiryChecker import *
 from AppLogger import LOG
 from BlogOpener import openBlog
 from KorDivStockAnalyzer import KorDivStockAnalyzer
@@ -83,7 +83,8 @@ class GUI:
 
         if Config.__APP_GRADE__ == Config.FREE:
             expiryChecker = ExpiryChecker()
-            if expiryChecker.isExpired():
+            hardExpiryChecker = HardExpiryChecker()
+            if expiryChecker.isExpired() or hardExpiryChecker.isExpired():
                 msg_box = messagebox.showerror('Error', Config.EXPIRED_MESSAGE)
                 if msg_box == 'ok':
                     self.root.destroy()
@@ -231,7 +232,7 @@ class GUI:
             if event == STOCK_ANALYSIS_OK_EVENT:
                 ticker = stockAnalyzerEvent.getMessage()
                 LOG(f'{ticker} analysis ok !')
-                self.stockAnalyzer.saveAnalysisChartImage(ticker, self.chart_dir)
+                #self.stockAnalyzer.saveAnalysisChartImage(ticker, self.chart_dir)
             elif event == ANALYZER_FINISH_EVENT:
                 LOG('analysis complete !')
                 analysisResult = self.stockAnalyzer.getAnalysisResult()
@@ -240,9 +241,6 @@ class GUI:
                 csvFileName = csvFileName.replace('.csv', '_result.csv')
                 resultCsvFilePath = os.path.join(self.out_dir, csvFileName)
                 AnalysisResultSaver.saveAnalsisResultToCsv(analysisResult, resultCsvFilePath)
-                self.__updateStatusText__('*'*50)
-                self.__updateStatusText__('주식 리스트 분석을 모두 완료하였습니다.')
-                self.__updateStatusText__('*'*50)
             else:
                 LOG('invalid event !')
         except Exception as e:
