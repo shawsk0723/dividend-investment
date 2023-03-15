@@ -45,8 +45,8 @@ EXPIRED_MESSAGE = '데이터 유효 기간이 만료되었습니다!'
 """
 App Config
 """
-WIN_SIZE = "800x600"
-WIN_FONT_SETTING = "맑은고딕 10"
+WIN_SIZE = "800x500"
+WIN_FONT_SETTING = "맑은고딕 9"
 
 WIN_TITLE = f'안티똥손 {COUNTRY}판 {Version.getVersion()} {__BUILD_TYPE__} ({__APP_GRADE__})'
 
@@ -58,5 +58,8 @@ OUT_DIR = os.path.join(os.getcwd(), 'output')
 """
 Stock Config
 """
+
+STOCK_LIST_FILE_PATH = './data/stocklist.csv'
+
 START_DATE = '20150501'
 DEFAULT_STOCK_CODE = '010130'
