@@ -84,7 +84,9 @@ class UsaDivStockAnalyzer(StockAnalyzer):
 
                 index = str(idx+1).zfill(3)
                 totalStockNum = str(totalStockNum).zfill(3)
-                self.root.tickerAnalysisCb(ticker, True)
+                self.root.tickerAnalysisCb(ticker = ticker,
+                                            cur_div_yield = self.cur_div_yield,
+                                            stock_div_data = self.stock_div_data.copy())
                 time.sleep(self.delay)    
                 self.root.__updateStatusText__(f'[*****************100%*******************] {index}/{totalStockNum} 완료하였습니다.')
 
