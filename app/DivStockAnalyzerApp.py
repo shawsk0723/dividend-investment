@@ -27,6 +27,7 @@ import AnalysisResultSaver
 import UserSettings
 import HelpMenu
 
+import UsaDivStockLib
 
 """
 App config
@@ -219,18 +220,13 @@ class GUI:
         self.menu.add_cascade(label='도움말', menu=help_menu)
         self.root.config(menu=self.menu)
 
-    def tickerAnalysisCb(self, ticker, success):
-        LOG(f'tickerAnalysisCb, ticker = {ticker}, success = {success}')
-        if success:
-            stockAnalyzerEvent = StockAnalyzerEvent(STOCK_ANALYSIS_OK_EVENT, ticker)
-        else:
-            stockAnalyzerEvent = StockAnalyzerEvent(STOCK_ANALYSIS_FAIL_EVENT, ticker)
-
+    def tickerAnalysisCb(self, **kargs):
+        stockAnalyzerEvent = StockAnalyzerEvent(STOCK_ANALYSIS_OK_EVENT, kargs)
         self.eventQueue.put_nowait(stockAnalyzerEvent)
 
     def analysisCompleteCb(self, success):
         LOG('analysisCompleteCb ~')
-        stockAnalyzerEvent = StockAnalyzerEvent(ANALYZER_FINISH_EVENT, "")
+        stockAnalyzerEvent = StockAnalyzerEvent(ANALYZER_FINISH_EVENT, {})
         self.eventQueue.put_nowait(stockAnalyzerEvent)
 
     def checkAnalysisResult(self):
@@ -248,12 +244,21 @@ class GUI:
             event = stockAnalyzerEvent.getEvent()
             LOG(f'event from analyzer = {event}')
             if event == STOCK_ANALYSIS_OK_EVENT:
-                ticker = stockAnalyzerEvent.getMessage()
-                LOG(f'{ticker} analysis ok !')
                 """
                 To-Do: 100개 이미지 저장 실행 도중 런타임 에러 발생 ---> 해결 필요
                 """
-                #self.stockAnalyzer.saveAnalysisChartImage(ticker, self.chart_dir)
+                """
+                data = stockAnalyzerEvent.getData()
+                ticker = data['ticker']
+                cur_div_yield = data['cur_div_yield']
+                stock_div_data = data['stock_div_data']
+                chartFilePath = os.path.join(self.chart_dir, f'{ticker}.png')
+                UsaDivStockLib.saveDivAnalysisChart(ticker,
+                                                stock_div_data,
+                                                cur_div_yield,
+                                                chartFilePath)
+                """
+                LOG(f'analysis ok')
             elif event == ANALYZER_FINISH_EVENT:
                 LOG('analysis complete !')
                 analysisResult = self.stockAnalyzer.getAnalysisResult()
