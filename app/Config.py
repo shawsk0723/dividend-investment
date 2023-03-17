@@ -54,8 +54,8 @@ WIN_FONT_SETTING = "맑은고딕 9"
 WIN_TITLE = f'{APP_NAME} {COUNTRY}판 {Version.getVersion()} {__BUILD_TYPE__} ({__APP_GRADE__})'
 
 TITLE_LABEL = '똥손탈출 프로젝트'
-SUBTITLE_LABEL_1 = '인간은 원래 똥손으로 태어났다.'
-SUBTITLE_LABEL_2 = '나도 똥손, 친구도 똥손, 전문가도 똥손이다.'
+SUBTITLE_LABEL_1 = '데이터가 널렸는데!'
+SUBTITLE_LABEL_2 = ' 나는아직 뇌동매매?'
 SUBTITLE_LABEL_LIST = [SUBTITLE_LABEL_1, SUBTITLE_LABEL_2]
 
 START_BUTTON_LABEL = '데이터로 투자하라!'
