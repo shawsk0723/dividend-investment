@@ -72,6 +72,9 @@ class GUI:
         self.chart_dir = os.path.join(self.out_dir, 'chart')
         AppUtil.makeDirIfNotExist(self.chart_dir)
 
+        self.expiryChecker = ExpiryChecker()
+        self.hardExpiryChecker = HardExpiryChecker()
+
         self.analysisResultChecker = self.root.after(200, self.checkAnalysisResult)
 
     def onClosing(self):
@@ -84,32 +87,17 @@ class GUI:
 
     def start(self):
 
-        if Config.__APP_GRADE__ == Config.FREE:
-            expiryChecker = ExpiryChecker()
-            hardExpiryChecker = HardExpiryChecker()
-            if expiryChecker.isExpired() or hardExpiryChecker.isExpired():
-                msg_box = messagebox.showerror('Error', Config.EXPIRED_MESSAGE)
-                if msg_box == 'ok':
-                    self.root.destroy()
-                    return
-            else:
-                remainedDay = expiryChecker.getRemainedDay()
-                LOG(f'remained day = {remainedDay}')
-                self.expiryLabel = Label(root,
-                                         text = f'사용 기간이 {remainedDay}일 남았습니다.',
-                                         font = NORMAL_FONT, fg ="red",
-                                         height=1)
-                self.expiryLabel.pack(pady=PADY)
-
         # Start Button 콜백 함수
         def startButtonCb():
+            if Config.__APP_GRADE__ == Config.FREE:
+
+                if self.expiryChecker.isExpired() or self.hardExpiryChecker.isExpired():
+                    msg_box = messagebox.showerror('Error', Config.EXPIRED_FAKE_MESSAGE)
+                    if msg_box == 'ok':
+                        return
+
             try:
                 LOG('Start Button Clicked ~')
-                #self.stockCode = self.codeEntry.get()
-                #if self.stockCode == "":
-                #    messagebox.showerror('Error', '코드를 입력하세요!')
-                #    return
-                # 결과 텍스트 위젯 리셋
                 self.statusText.delete(1.0,END)
                 self.statusText.insert(END, '분석을 시작합니다.')
 
