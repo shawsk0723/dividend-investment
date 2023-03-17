@@ -14,7 +14,7 @@ Major = 1
 #
 # change if new function is added
 #
-Minor = 1
+Minor = 0
 
 #
 # increase if bug is fixed
