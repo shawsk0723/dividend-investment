@@ -54,9 +54,11 @@ WIN_FONT_SETTING = "맑은고딕 9"
 WIN_TITLE = f'{APP_NAME} {COUNTRY}판 {Version.getVersion()} {__BUILD_TYPE__} ({__APP_GRADE__})'
 
 TITLE_LABEL = '똥손탈출 프로젝트'
-SUBTITLE_LABEL_1 = '문제점 : 우리는 똥손으로 태어났다.'
-SUBTITLE_LABEL_2 = '해결책 : 매수 버튼 누르기 전에 안티똥손 버튼을 먼저 눌러 본다.'
-START_BUTTON_LABEL = '도와줘요~ 안티똥손!'
+SUBTITLE_LABEL_1 = '인간은 원래 똥손으로 태어났다.'
+SUBTITLE_LABEL_2 = '나도 똥손, 친구도 똥손, 전문가도 똥손이다.'
+SUBTITLE_LABEL_LIST = [SUBTITLE_LABEL_1, SUBTITLE_LABEL_2]
+
+START_BUTTON_LABEL = '데이터로 투자하라!'
 DATA_DIR = os.path.join(os.getcwd(), 'data')
 OUT_DIR = os.path.join(os.getcwd(), 'output')
 
