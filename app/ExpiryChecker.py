@@ -30,23 +30,24 @@ class ExpiryChecker:
         self.expiration_day = expiration_day
         self.remained_day = 0
 
-    def isExpired(self):
-        current_date = datetime.now()
-        #print(f'expiry_file_path = {self.expiry_file_path}')
+        self.current_date = datetime.now()
+        print(f'expiry_file_path = {self.expiry_file_path}')
         if os.path.isfile(self.expiry_file_path):
             with open(self.expiry_file_path, 'r') as f:
                 install_date =f.read()
                 install_date = datetime.strptime(install_date, "%Y%m%d")
                 print(f'install_date = {install_date}')
-                print(f'current_date = {current_date}')
-                elapsed_day = current_date - install_date
-                self.remained_day = self.expiration_day - elapsed_day.days
-                return elapsed_day > timedelta(self.expiration_day)
+                print(f'current_date = {self.current_date}')
+                self.elapsed_day = self.current_date - install_date
+                self.remained_day = self.expiration_day - self.elapsed_day.days
         else:
             with open(self.expiry_file_path, 'w') as f:
-                f.write(f'{current_date.strftime("%Y%m%d")}')
+                f.write(f'{self.current_date.strftime("%Y%m%d")}')
+                self.elapsed_day = timedelta(0)
                 self.remained_day = self.expiration_day
-                return False
+
+    def isExpired(self):
+        return self.elapsed_day > timedelta(self.expiration_day)
 
     def getRemainedDay(self):
         return self.remained_day
