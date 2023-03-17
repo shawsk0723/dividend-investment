@@ -121,22 +121,17 @@ class GUI:
                                   text = Config.TITLE_LABEL, 
                                   font = BIG_FONT, fg ="blue",
                                   borderwidth=1, relief="solid",
-                                  width=30,
+                                  width=40,
                                   height=2)
-        self.titleLabel.pack(pady=0)
+        self.titleLabel.pack(pady=10)
 
-        self.subtitleLabel1 = Label(frame1,
-                                  text = Config.SUBTITLE_LABEL_1, 
-                                  font = NORMAL_FONT,
-                                  height=2)
-        self.subtitleLabel1.pack(pady=0)
+        for SUBTITLE_LABEL in Config.SUBTITLE_LABEL_LIST:
+            self.subtitleLabel1 = Label(frame1,
+                                    text = SUBTITLE_LABEL, 
+                                    font = NORMAL_FONT,
+                                    height=2)
+            self.subtitleLabel1.pack(pady=0)
     
-        self.subtitleLabel2 = Label(frame1, 
-                                  text = Config.SUBTITLE_LABEL_2, 
-                                  font = NORMAL_FONT,
-                                  height=2)
-        self.subtitleLabel2.pack(pady=0)
-
         self.startButton = Button(frame1,
                                   font = BIG_FONT,
                                   height=3)
@@ -151,12 +146,12 @@ class GUI:
                                   height=1)
         self.messageLabel.pack(pady=PADY)
 
-        self.progressbar=tkinter.ttk.Progressbar(frame1, maximum=100, mode="indeterminate")
-        self.progressbar.pack(pady=PADY)
-
         self.statusLabel = Label(frame1, text = f'진행 상태',
                                  font = BIG_FONT)
         self.statusLabel.pack(pady=PADY*2)
+
+        self.progressbar=tkinter.ttk.Progressbar(frame1, maximum=250, mode="indeterminate", length=350)
+        self.progressbar.pack(pady=PADY)
 
         """
         진행 상황 프레임
