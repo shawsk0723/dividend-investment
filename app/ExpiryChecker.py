@@ -12,6 +12,10 @@ from datetime import datetime
 from datetime import timedelta
 import Config
 
+def LOG(msg):
+    #print(msg)
+    pass
+
 class HardExpiryChecker:
     def isExpired(self):
         expire_date = Config.APP_EXPIRE_DATE
@@ -31,13 +35,13 @@ class ExpiryChecker:
         self.remained_day = 0
 
         self.current_date = datetime.now()
-        print(f'expiry_file_path = {self.expiry_file_path}')
+        LOG(f'expiry_file_path = {self.expiry_file_path}')
         if os.path.isfile(self.expiry_file_path):
             with open(self.expiry_file_path, 'r') as f:
                 install_date =f.read()
                 install_date = datetime.strptime(install_date, "%Y%m%d")
-                print(f'install_date = {install_date}')
-                print(f'current_date = {self.current_date}')
+                LOG(f'install_date = {install_date}')
+                LOG(f'current_date = {self.current_date}')
                 self.elapsed_day = self.current_date - install_date
                 self.remained_day = self.expiration_day - self.elapsed_day.days
         else:
@@ -56,12 +60,6 @@ class ExpiryChecker:
 TEST
 """
 if __name__ == '__main__':
-    expiryDate = getExiryDate()
-    print(f'Expiry Date = {expiryDate}')
-
-    checkExpiryResult = checkExpiry()
-    print(f'Expiry Check Result = {checkExpiryResult}')
-
     expiryChecker = ExpiryChecker()
     expired = expiryChecker.isExpired()
     print(f'expired = {expired}')
