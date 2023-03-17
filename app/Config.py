@@ -6,8 +6,8 @@ import Version
 """
 App Grade
 """
-FREE = '무료'
-PAID = '유료'
+FREE = 'Free'
+PAID = 'Premium'
 
 __APP_GRADE__ = FREE
 
@@ -37,10 +37,11 @@ def isRelease():
 
 EXPIRATION_DAY = 30
 
-APP_EXPIRE_DATE = datetime(2023,5,1)
+APP_EXPIRE_DATE = datetime(2023,6,1)
 #APP_EXPIRE_DATE = datetime(2023,2,1)
 
 EXPIRED_MESSAGE = '사용 기간이 만료되었습니다!'
+EXPIRED_FAKE_MESSAGE = '업데이트가 필요합니다!'
 
 """
 App Config
