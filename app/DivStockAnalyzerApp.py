@@ -227,10 +227,6 @@ class GUI:
             event = stockAnalyzerEvent.getEvent()
             LOG(f'event from analyzer = {event}')
             if event == STOCK_ANALYSIS_OK_EVENT:
-                """
-                To-Do: 100개 이미지 저장 실행 도중 런타임 에러 발생 ---> 해결 필요
-                """
-                """
                 data = stockAnalyzerEvent.getData()
                 ticker = data['ticker']
                 cur_div_yield = data['cur_div_yield']
@@ -240,7 +236,6 @@ class GUI:
                                                 stock_div_data,
                                                 cur_div_yield,
                                                 chartFilePath)
-                """
                 LOG(f'analysis ok')
             elif event == ANALYZER_FINISH_EVENT:
                 LOG('analysis complete !')
