@@ -12,3 +12,4 @@ app/output/
 app/build/
 app/*.spec
 app/dist/debug.log
+app/dist/data/
