@@ -36,4 +36,4 @@ def getFutureDividend(capital, cur_div_yield, interest_rate, years):
     for year in range(1, years+1):
         futureDividend = capital * cur_div_yield * ((1+ interest_rate)**year)
         futureDividends.append(round(futureDividend))
-    return futureDividends   
+    return futureDividends
