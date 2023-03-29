@@ -17,7 +17,7 @@ import Config
 import AppUtil
 from ExpiryChecker import *
 from AppLogger import LOG
-from BlogOpener import openBlog
+import WebSiteOpener
 from KorDivStockAnalyzer import KorDivStockAnalyzer
 from UsaDivStockAnalyzer import UsaDivStockAnalyzer
 from WorkerThread import WorkerThread
@@ -179,10 +179,20 @@ class GUI:
         frame3 = Frame(root)
         frame3.pack()
         openBlogButton = Button(frame3, 
-                                text = "코드장인의 블로그 바로가기",
+                                text = "데이터로 투자하라\n\n전자책 바로가기",
+                                width = 20,
+                                height= 5,
                                 font = BIG_FONT,
-                                command=openBlog)
-        openBlogButton.pack(side=BOTTOM, pady=20)
+                                command = WebSiteOpener.openKmongEbook)
+        openBlogButton.pack(side=LEFT, pady=20)
+
+        openBlogButton = Button(frame3, 
+                                text = "코드장인\n\n블로그 바로가기",
+                                width = 20,
+                                height= 5,
+                                font = BIG_FONT,
+                                command = WebSiteOpener.openMyBlog)
+        openBlogButton.pack(side=RIGHT, padx=20, pady=20)
 
         """
         메뉴
