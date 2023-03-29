@@ -48,7 +48,7 @@ App Config
 """
 APP_NAME = '안티똥손'
 
-WIN_SIZE = "800x550"
+WIN_SIZE = "800x600"
 WIN_FONT_SETTING = "맑은고딕 9"
 
 WIN_TITLE = f'{APP_NAME} {COUNTRY}판 {Version.getVersion()} {__BUILD_TYPE__} ({__APP_GRADE__})'
