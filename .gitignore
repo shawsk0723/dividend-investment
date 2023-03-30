@@ -14,3 +14,5 @@ app/*.spec
 app/dist/debug.log
 app/dist/data/
 dividend-achievers/.ipynb_checkpoints/Test-checkpoint.ipynb
+etc/.ipynb_checkpoints/Usa_Stock_Portfolio_Manager-checkpoint.ipynb
+etc/.ipynb_checkpoints/Usa_Stock_Portfolio_Manager-Test-checkpoint.ipynb
