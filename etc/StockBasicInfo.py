@@ -95,4 +95,4 @@ def getBuyScore(ticker, periods=7):
         return current_dividend, current_div_yield, buy_score
     except Exception as e:
         traceback.format_exc(e)        
-        return 'N/A'
+        return 'N/A', 'N/A', 'N/A'
