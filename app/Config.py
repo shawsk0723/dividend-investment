@@ -9,7 +9,7 @@ App Grade
 FREE = 'Regular'
 PAID = 'Premium'
 
-__APP_GRADE__ = FREE
+__APP_GRADE__ = PAID
 
 
 """
