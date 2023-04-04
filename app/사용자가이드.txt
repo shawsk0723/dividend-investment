@@ -1,0 +1,13 @@
+1. 라이브러리 설치하기
+
+pip install -r requirements.txt
+
+2. 빌드하기
+
+build.bat
+
+3. 빌드 시 문제 발생할 경우
+
+https://cafe.naver.com/codegarage
+
+앱/전자책/이벤트 -> 질문게시판
