@@ -30,3 +30,9 @@ dividend-achievers/__pycache__/StockScore.cpython-39.pyc
 dividend-achievers/.ipynb_checkpoints/01_Div_Achievers_Sector_Grouping_Analysis-checkpoint.ipynb
 dividend-achievers/__pycache__/StockBasicInfo.cpython-39.pyc
 dividend-achievers/__pycache__/StockScore.cpython-39.pyc
+app/dist/data/stocklist.csv
+app/dist/output/chart/AMGN.png
+app/dist/output/chart/TXN.png
+app/dist/output/stocklist_result.csv
+app/dist/output/stocklist_result_sorted_buyscore.csv
+app/dist/UsaDivStockAnalyzer.exe
