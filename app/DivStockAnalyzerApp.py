@@ -91,7 +91,8 @@ class GUI:
         def startButtonCb():
             if Config.__APP_GRADE__ == Config.FREE:
 
-                if self.expiryChecker.isExpired() or self.hardExpiryChecker.isExpired():
+                #if self.expiryChecker.isExpired() or self.hardExpiryChecker.isExpired():
+                if self.expiryChecker.isExpired():
                     msg_box = messagebox.showerror('Error', Config.EXPIRED_FAKE_MESSAGE)
                     if msg_box == 'ok':
                         return
