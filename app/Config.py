@@ -9,7 +9,7 @@ App Grade
 FREE = 'Regular'
 PAID = 'Premium'
 
-__APP_GRADE__ = PAID
+__APP_GRADE__ = FREE
 
 
 """
@@ -35,9 +35,9 @@ def isRelease():
 앱 유효 기간
 """
 
-EXPIRATION_DAY = 365
+EXPIRATION_DAY = 180
 
-APP_EXPIRE_DATE = datetime(2023,12,31)
+APP_EXPIRE_DATE = datetime(2024,12,31)
 #APP_EXPIRE_DATE = datetime(2023,2,1)
 
 EXPIRED_MESSAGE = '사용 기간이 만료되었습니다!'
