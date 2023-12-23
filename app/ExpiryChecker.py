@@ -13,7 +13,7 @@ from datetime import timedelta
 import Config
 
 def LOG(msg):
-    #print(msg)
+    print(msg)
     pass
 
 class HardExpiryChecker:
