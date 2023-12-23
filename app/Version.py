@@ -19,7 +19,7 @@ Minor = 1
 #
 # increase if bug is fixed
 #
-Patch = 0
+Patch = 1
 
 def getVersion():
     version = f'Ver{Major}.{Minor}.{Patch}'
