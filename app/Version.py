@@ -14,12 +14,12 @@ Major = 1
 #
 # change if new function is added
 #
-Minor = 1
+Minor = 2
 
 #
 # increase if bug is fixed
 #
-Patch = 1
+Patch = 0
 
 def getVersion():
     version = f'Ver{Major}.{Minor}.{Patch}'
