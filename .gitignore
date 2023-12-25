@@ -36,3 +36,6 @@ app/dist/output/chart/TXN.png
 app/dist/output/stocklist_result.csv
 app/dist/output/stocklist_result_sorted_buyscore.csv
 app/dist/UsaDivStockAnalyzer.exe
+dividend-achievers/__pycache__/StockBasicInfo.cpython-39.pyc
+dividend-achievers/__pycache__/StockScore.cpython-39.pyc
+dividend-achievers/__pycache__/StockScore.cpython-39.pyc
