@@ -40,3 +40,9 @@ dividend-achievers/__pycache__/StockBasicInfo.cpython-39.pyc
 dividend-achievers/__pycache__/StockScore.cpython-39.pyc
 dividend-achievers/__pycache__/StockScore.cpython-39.pyc
 *.pyc
+app/dist/output/chart/AMGN.png
+app/dist/output/chart/AMGN.png
+app/dist/output/chart/AMGN.png
+app/dist/output/chart/TXN.png
+app/dist/output/stocklist_result.csv
+app/dist/output/stocklist_result_sorted_buyscore.csv
